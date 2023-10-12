@@ -76,6 +76,6 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonRes)
 }
 
-func getOneUser(w http.ResponseWriter, r *http.Request) {
+// func getOneUser(w http.ResponseWriter, r *http.Request) {
 
-}
+// }

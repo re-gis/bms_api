@@ -148,6 +148,10 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Id, err := strconv.Atoi(IdStr)
+	if err != nil {
+		http.Error(w, "An error occurred while formating the id", http.StatusInternalServerError)
+		return
+	}
 	// get the book from database
 	var book models.Book
 
