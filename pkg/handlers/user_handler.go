@@ -26,6 +26,7 @@ func UserHandler(w http.ResponseWriter, r *http.Request) {
 
 func registerUser(w http.ResponseWriter, r *http.Request) {
 	var user models.User
+	var eUser models.User
 
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -35,6 +36,13 @@ func registerUser(w http.ResponseWriter, r *http.Request) {
 
 	if user.Email == "" || user.Password == "" || user.Name == "" {
 		http.Error(w, "All credentials are required!", http.StatusBadRequest)
+		return
+	}
+
+	// first get the user
+	rs := db.GetDB().Where("email =?", user.Email).First(&eUser)
+	if rs != nil {
+		http.Error(w, "User already exists!", http.StatusBadRequest)
 		return
 	}
 

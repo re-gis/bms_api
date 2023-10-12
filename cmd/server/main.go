@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -33,10 +34,12 @@ func main() {
 	r.HandleFunc("/books/delete/{id:[0-9]+}", handlers.BooksHandler).Methods("DELETE")
 
 	/* USER ROUTES */
-	r.HandleFunc("/users", handlers.UserHandler)
+	r.HandleFunc("/users", handlers.UserHandler).Methods("POST", "GET", "PUT")
+	r.HandleFunc("/users/login", handlers.LoginHandler).Methods("POST")
 
 	// SERVER
 	// fmt.Println("Server running on port 8080")
 	http.Handle("/", r)
+	fmt.Println("Server listening port :8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
